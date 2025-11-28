@@ -3,7 +3,7 @@
 #include <metal_texture>
 using namespace metal;
 
-#line 24 "assets/particles.slang"
+#line 24 "../assets/particles.slang"
 struct KernelContext_0
 {
     float device* gXCurr_0;

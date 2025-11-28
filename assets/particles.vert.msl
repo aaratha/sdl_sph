@@ -3,7 +3,7 @@
 #include <metal_texture>
 using namespace metal;
 
-#line 65 "assets/particles.slang"
+#line 65 "../assets/particles.slang"
 struct mainVS_Result_0
 {
     float4 pos_0 [[position]];
@@ -45,7 +45,7 @@ struct VSOutput_0
 #line 82
     thread VSOutput_0 o_0;
     (&o_0)->pos_1 = float4(*(gXCurr_1+id_0), *(gYCurr_1+id_0), 0.0, 1.0);
-    (&o_0)->col_1 = float4(1.0, 0.40000000596046448, 0.20000000298023224, 1.0);
+    (&o_0)->col_1 = float4(1.0, 1.0, 1.0, 1.0);
     (&o_0)->pointSize_1 = 4.0;
 
 #line 85

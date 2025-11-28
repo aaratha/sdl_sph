@@ -81,7 +81,7 @@ VSOutput mainVS(uint id : SV_VertexID)
 
     VSOutput o;
     o.pos = float4(x, y, 0, 1);
-    o.col = float4(1, 0.4, 0.2, 1);
+    o.col = float4(1, 1, 1, 1);
     o.pointSize = 4.0;
     return o;
 }
