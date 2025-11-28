@@ -1,6 +1,7 @@
 # Create build directory if it doesn't exist
 mkdir -p build
 cd build
+mkdir -p assets
 
 # Compile Slang shaders to SPIR-V
 slangc ${PROJECT_SOURCE_DIR:-..}/assets/particles.slang -entry mainCS -profile cs_6_0 -target spirv -o assets/particles.comp.spv

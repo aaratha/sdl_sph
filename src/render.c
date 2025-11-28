@@ -21,7 +21,8 @@ bool Render_Init(RenderState *state,
       .stage = SDL_GPU_SHADERSTAGE_VERTEX,
       .num_samplers = 0,
       .num_storage_textures = 0,
-      .num_storage_buffers = 6,
+      // Bindings 1..6 are used for storage buffers, so expose 7 slots.
+      .num_storage_buffers = 7,
       .num_uniform_buffers = 0};
 
   SDL_GPUShader *vertexShader = SDL_CreateGPUShader(device, &vertShaderCreateInfo);
@@ -174,6 +175,7 @@ bool Render_Draw(RenderState *state,
   SDL_BindGPUGraphicsPipeline(renderPass, state->pipeline);
 
   SDL_GPUBuffer *buffers[] = {xCurr, yCurr};
+  // Vertex shader expects x/y at storage slots 0 and 1.
   SDL_BindGPUVertexStorageBuffers(renderPass, 0, buffers, 2);
 
   SDL_DrawGPUPrimitives(renderPass, (Uint32)numParticles, 1, 0, 0);

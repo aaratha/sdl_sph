@@ -3,25 +3,25 @@
 #include <metal_texture>
 using namespace metal;
 
-#line 53 "assets/particles.slang"
+#line 81 "assets/particles.slang"
 struct pixelOutput_0
 {
     float4 output_0 [[color(0)]];
 };
 
 
-#line 53
+#line 81
 struct pixelInput_0
 {
     float4 col_0 [[user(COLOR)]];
 };
 
 
-#line 75
+#line 103
 [[fragment]] pixelOutput_0 mainPS(pixelInput_0 _S1 [[stage_in]], float4 pos_0 [[position]])
 {
 
-#line 75
+#line 103
     pixelOutput_0 _S2 = { _S1.col_0 };
 
     return _S2;

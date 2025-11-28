@@ -16,6 +16,8 @@
 void mainCS(uint3 id : SV_DispatchThreadID)
 {
     uint i = id.x;
+    const uint count = 1024; // keep in sync with CPU allocation
+    if (i >= count) return;
 
     // Basic Verlet step with no external forces. Velocity is encoded as
     // (x_curr - x_prev).
@@ -24,17 +26,33 @@ void mainCS(uint3 id : SV_DispatchThreadID)
     float x_prev = gXPrev[i];
     float y_prev = gYPrev[i];
 
-    float x_next = x_curr + (x_curr - x_prev);
-    float y_next = y_curr + (y_curr - y_prev);
+    float vel_x = x_curr - x_prev;
+    float vel_y = y_curr - y_prev;
 
-    // Wrap to keep things visible. Swap in your own boundary logic/forces.
-    if (x_next > 1.0) x_next = -1.0;
-    if (x_next < -1.0) x_next = 1.0;
-    if (y_next > 1.0) y_next = -1.0;
-    if (y_next < -1.0) y_next = 1.0;
+    float x_next = x_curr + vel_x;
+    float y_next = y_curr + vel_y;
 
-    gXPrev[i] = x_curr;
-    gYPrev[i] = y_curr;
+    // Simple bounce with a slight damping factor to avoid runaway energy.
+    const float bounce = 0.98f;
+
+    if (x_next > 1.0) {
+        x_next = 1.0;
+        vel_x = -vel_x * bounce;
+    } else if (x_next < -1.0) {
+        x_next = -1.0;
+        vel_x = -vel_x * bounce;
+    }
+
+    if (y_next > 1.0) {
+        y_next = 1.0;
+        vel_y = -vel_y * bounce;
+    } else if (y_next < -1.0) {
+        y_next = -1.0;
+        vel_y = -vel_y * bounce;
+    }
+
+    gXPrev[i] = x_next - vel_x;
+    gYPrev[i] = y_next - vel_y;
     gXCurr[i] = x_next;
     gYCurr[i] = y_next;
 

@@ -3,7 +3,7 @@
 #include <metal_texture>
 using namespace metal;
 
-#line 47 "assets/particles.slang"
+#line 65 "assets/particles.slang"
 struct mainVS_Result_0
 {
     float4 pos_0 [[position]];
@@ -12,7 +12,7 @@ struct mainVS_Result_0
 };
 
 
-#line 61
+#line 79
 struct KernelContext_0
 {
     float device* gXCurr_0;
@@ -20,7 +20,7 @@ struct KernelContext_0
 };
 
 
-#line 47
+#line 65
 struct VSOutput_0
 {
     float4 pos_1;
@@ -29,38 +29,38 @@ struct VSOutput_0
 };
 
 
-#line 47
+#line 65
 [[vertex]] mainVS_Result_0 mainVS(uint id_0 [[vertex_id]], float device* gXCurr_1 [[buffer(0)]], float device* gYCurr_1 [[buffer(1)]])
 {
 
-#line 47
+#line 65
     thread KernelContext_0 kernelContext_0;
 
-#line 47
+#line 65
     (&kernelContext_0)->gXCurr_0 = gXCurr_1;
 
-#line 47
+#line 65
     (&kernelContext_0)->gYCurr_0 = gYCurr_1;
 
-#line 64
+#line 82
     thread VSOutput_0 o_0;
     (&o_0)->pos_1 = float4(*(gXCurr_1+id_0), *(gYCurr_1+id_0), 0.0, 1.0);
     (&o_0)->col_1 = float4(1.0, 0.40000000596046448, 0.20000000298023224, 1.0);
     (&o_0)->pointSize_1 = 4.0;
 
-#line 67
+#line 85
     thread mainVS_Result_0 _S1;
 
-#line 67
+#line 85
     (&_S1)->pos_0 = o_0.pos_1;
 
-#line 67
+#line 85
     (&_S1)->col_0 = o_0.col_1;
 
-#line 67
+#line 85
     (&_S1)->pointSize_0 = o_0.pointSize_1;
 
-#line 67
+#line 85
     return _S1;
 }
 
