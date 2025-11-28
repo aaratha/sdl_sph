@@ -1,0 +1,117 @@
+#include <metal_stdlib>
+#include <metal_math>
+#include <metal_texture>
+using namespace metal;
+
+#line 22 "assets/particles.slang"
+struct KernelContext_0
+{
+    float device* gXCurr_0;
+    float device* gYCurr_0;
+    float device* gXPrev_0;
+    float device* gYPrev_0;
+};
+
+
+#line 16
+[[kernel]] void mainCS(uint3 id_0 [[thread_position_in_grid]], float device* gXCurr_1 [[buffer(0)]], float device* gYCurr_1 [[buffer(1)]], float device* gXPrev_1 [[buffer(2)]], float device* gYPrev_1 [[buffer(3)]])
+{
+
+#line 16
+    thread KernelContext_0 kernelContext_0;
+
+#line 16
+    (&kernelContext_0)->gXCurr_0 = gXCurr_1;
+
+#line 16
+    (&kernelContext_0)->gYCurr_0 = gYCurr_1;
+
+#line 16
+    (&kernelContext_0)->gXPrev_0 = gXPrev_1;
+
+#line 16
+    (&kernelContext_0)->gYPrev_0 = gYPrev_1;
+
+    uint i_0 = id_0.x;
+
+
+
+    float device* _S1 = gXCurr_1+i_0;
+
+#line 22
+    float x_curr_0 = *_S1;
+    float device* _S2 = gYCurr_1+i_0;
+
+#line 23
+    float y_curr_0 = *_S2;
+
+
+
+    float x_next_0 = *_S1 + (*_S1 - *(gXPrev_1+i_0));
+    float y_next_0 = *_S2 + (*_S2 - *(gYPrev_1+i_0));
+
+#line 28
+    float x_next_1;
+
+
+    if(x_next_0 > 1.0)
+    {
+
+#line 31
+        x_next_1 = -1.0;
+
+#line 31
+    }
+    else
+    {
+
+#line 31
+        x_next_1 = x_next_0;
+
+#line 31
+    }
+    if(x_next_1 < -1.0)
+    {
+
+#line 32
+        x_next_1 = 1.0;
+
+#line 32
+    }
+
+#line 32
+    float y_next_1;
+    if(y_next_0 > 1.0)
+    {
+
+#line 33
+        y_next_1 = -1.0;
+
+#line 33
+    }
+    else
+    {
+
+#line 33
+        y_next_1 = y_next_0;
+
+#line 33
+    }
+    if(y_next_1 < -1.0)
+    {
+
+#line 34
+        y_next_1 = 1.0;
+
+#line 34
+    }
+
+    *((&kernelContext_0)->gXPrev_0+i_0) = x_curr_0;
+    *((&kernelContext_0)->gYPrev_0+i_0) = y_curr_0;
+    *((&kernelContext_0)->gXCurr_0+i_0) = x_next_1;
+    *((&kernelContext_0)->gYCurr_0+i_0) = y_next_1;
+
+
+    return;
+}
+
